@@ -10,7 +10,7 @@ import time
 console = Console()
 
 def main():
-    load_dotenv()
+    load_dotenv(override=True)
 
     GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 
@@ -18,13 +18,17 @@ def main():
         console.print(
             Panel.fit(
                 "[bold red]Ошибка: Не найден API-ключ Gemini[/bold red]\n"
-                "Пожалуйста, создайте файл .env и добавьте туда:\n"
-                "GEMINI_API_KEY=ваш_ключ_здесь",
+                "Проверьте:\n"
+                "1. Файл .env существует и содержит 'GEMINI_API_KEY=ваш_ключ'\n"
+                "2. Ключ не содержит лишних пробелов/кавычек\n"
+                "3. Скрипт запускается из той же папки, где лежит .env",
                 title="Ошибка конфигурации",
                 border_style="red"
             )
         )
         return
+
+    console.print("[green]API-ключ Gemini успешно загружен![/green]")
 
     try:
         genai.configure(api_key=GEMINI_API_KEY)
@@ -51,7 +55,6 @@ def main():
                 border_style="yellow"
             )
         )
-
 
         response = model.generate_content(prompt)
 
