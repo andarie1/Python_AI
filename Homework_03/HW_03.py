@@ -1,7 +1,6 @@
 from google import generativeai as genai
 import os
 from dotenv import load_dotenv
-from rich import print
 from rich.console import Console
 from rich.panel import Panel
 from rich.text import Text
@@ -10,11 +9,9 @@ import time
 
 console = Console()
 
-
 def main():
     load_dotenv()
 
-    # Получение API ключа
     GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 
     if not GEMINI_API_KEY:
@@ -30,7 +27,6 @@ def main():
         return
 
     try:
-        # Настройка Gemini
         genai.configure(api_key=GEMINI_API_KEY)
 
         model = genai.GenerativeModel('gemini-pro')
